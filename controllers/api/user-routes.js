@@ -47,7 +47,9 @@ router.post('/', (req, res) => {
     username: req.body.username,
     password: req.body.password
   })
-  .then(dbUserData => {
+  .then(res.status(201).json({
+    message: 'Criado com sucesso'}), 
+    dbUserData => {
     req.session.save(() => {
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.username;
@@ -104,7 +106,9 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     }
   })
-  .then(dbUserData => {
+  .then(res.status(201).json({
+    message: 'Atualizado com sucesso'}), 
+    dbUserData => {
     if (!dbUserData[0]) {
       res.status(404).json({ message: 'Nenhum usuário encontrado' });
       return;
@@ -122,7 +126,9 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   })
-  .then(dbUserData => {
+  .then(res.status(201).json({
+    message: 'Deletado com sucesso'}), 
+    dbUserData => {
     if (!dbUserData) {
       res.status(404).json({ message: 'Nenhum usuário encontrado' });
       return;

@@ -68,7 +68,9 @@ router.post('/', withAuth, (req, res) => {
     post_text: req.body.post_text,
     user_id: req.session.user_id
   })
-    .then(dbPostData => res.json(dbPostData))
+    .then(res.status(201).json({
+      message: 'Criado com sucesso'}), 
+      dbPostData => res.json(dbPostData))
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
@@ -87,7 +89,9 @@ router.put('/:id', withAuth, (req, res) => {
       }
     }
   )
-    .then(dbPostData => {
+    .then(res.status(201).json({
+      message: 'Atualizado com sucesso'}), 
+      dbPostData => {
       if (!dbPostData) {
         res.status(404).json({ message: 'Nenhum post encontrado' });
         return;
@@ -106,7 +110,9 @@ router.delete('/:id', withAuth, (req, res) => {
       id: req.params.id
     }
   })
-    .then(dbPostData => {
+    .then(res.status(201).json({
+      message: 'Deletado com sucesso'}), 
+      dbPostData => {
       if (!dbPostData) {
         res.status(404).json({ message: 'Nenhum post encontrado' });
         return;
